@@ -36,3 +36,20 @@
 
 ## Установка
 Клонируем репозиторий GitHub
+```shell
+git clione https://github.com/r4hx/SpyInstaComments.git
+```
+Переходим в каталог с программой
+```shell
+cd SpyInstaComments
+```
+Запускаем сборку docker контейнера
+```shell
+docker build -t SpyInstaComments .
+```
+Дожидаемся окончания сборки и запускаем наш контейнер
+```shell
+docker run -p80:80/tcp SpyInstaComments
+```
+Открываем браузер и вводим адреc http://127.0.0.1 логин и пароль **admin**:**admin**
+
