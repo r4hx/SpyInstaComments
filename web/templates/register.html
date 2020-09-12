@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Авторизация{% endblock %}
+{% block content %}
+<section class="hero is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-12-mobile is-6-tablet is-5-desktop is-4-widescreen">
+          <div class="container">
+            <h1 class="title">
+              Регистрация
+            </h1>
+          </div>
+          {% if form.errors %}
+          <div class="container">
+            <h1 class="subtitles has-text-danger">
+              При заполнение формы произошла ошибка
+            </h1>
+          </div>
+          {% endif %}
+          <form method="POST" action="{% url 'register' %}" class="box">
+            {% csrf_token %}
+            <div class="field">
+              <label for="" class="label">Имя пользователя</label>
+              <div class="control has-icons-left">
+                <input type="text" placeholder="Vasya" class="input is-rounded is-medium" name="username" required>
+                <span class="icon is-medium is-left">
+                  <i class="fa fa-user"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="" class="label">Электронная почта</label>
+              <div class="control has-icons-left">
+                <input type="text" placeholder="Vasya.pupkin@mail.ru" class="input is-rounded is-medium" name="email" required>
+                <span class="icon is-medium is-left">
+                  <i class="fa fa-at"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="" class="label">Пароль</label>
+              <div class="control has-icons-left">
+                <input type="password" placeholder="*******" class="input is-rounded is-medium" name="password" required>
+                <span class="icon is-medium is-left">
+                  <i class="fa fa-unlock"></i>
+                </span>
+              </div>
+              <label for="" class="label">Повторите ввод пароля</label>
+              <div class="control has-icons-left">
+                <input type="password" placeholder="*******" class="input is-rounded is-medium" name="password2" required>
+                <span class="icon is-medium is-left">
+                  <i class="fa fa-unlock"></i>
+                </span>
+              </div>
+            </div>
+            <input type="hidden" name="next" value="{{ next }}">
+            <div class="field">
+              <button id="button" onclick="IsLoading()" class="button is-rounded is-dark is-medium">Готово</button>
+              <a href="{% url 'social:begin' 'vk-oauth2' %}" class="button is-rounded is-info is-medium">Через ВК</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock%}

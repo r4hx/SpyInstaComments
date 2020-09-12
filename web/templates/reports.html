@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}Отчет о мониторинге{% endblock %}
+{% block content %}
+<div class="hero-body is-medium">
+  <div class="table-container">
+  {% if comments %}
+    <table class="table is-hoverable is-fullwidth is-bordered" valign="middle">
+      <caption>
+        <h2 class="title"><strong>Результаты мониторинга</strong></h2>
+        <br>
+      </caption>
+      <thead style="background: black">
+        <tr>
+          <th class="has-text-centered has-tooltip-arrow" data-tooltip="Пост">
+            <p style="color:white"><i class="fas fa-sticky-note"></i></p>
+          </th>
+          <th class="has-text-centered has-tooltip-arrow" data-tooltip="Тип ответа">
+            <p style="color:white"><i class="fas fa-comments"></i></p>
+          </th>
+          <th class="has-text-centered has-tooltip-arrow" data-tooltip="Текст">
+            <p style="color:white"><i class="fas fa-comment-dots"></i></p>
+          </th>
+          <th class="has-text-centered has-tooltip-arrow" data-tooltip="Ссылка">
+            <p style="color:white"><i class="fas fa-link"></i>  </p>
+          </th>
+          <th class="has-text-centered has-tooltip-arrow" data-tooltip="Видимость">
+            <p style="color:white"><i class="fas fa-eye"></i></p>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for comment in comments %}
+        <tr id="tr-id-{{ comment.id }}">
+          <th class="has-text-centered">
+
+            <div class="modal" id="{{comment.uid}}">
+              <div class="modal-background"></div>
+              <div class="modal-content">
+                <div class="card">
+                  <div class="card-image">
+                    <figure class="image is-150х150">
+                      <img src="{{ comment.post.pic_url }}">
+                    </figure>
+                  </div>
+                  <div class="card-content">
+                    <div class="media">
+                      <div class="media-left">
+                        <figure class="image is-48x48">
+                          <img src="{{ comment.post.username.pic_url }}">
+                        </figure>
+                      </div>
+                      <div class="media-content">
+                        <p class="title is-4">{{ comment.post.username.full_name }}</p>
+                        <p class="subtitle is-6">@{{ comment.post.username.username }}</p>
+                        <div class="content">
+                          <div class="column">{{ comment.post.text }}</div>
+                          <br>
+                          <time datetime="{{ comment.timestamp }}">{{ comment.timestamp }}</time>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="modal-close is-large" aria-label="close" onclick="DeActivateModal('{{comment.uid}}')"></button>
+                </div>
+              </div>
+
+            </div>
+            <img width="38" src="{{ comment.post.pic_url }}" onclick="ActivateModal('{{comment.uid}}')" alt="Нажми для просмотра публикации"></img>
+          </th>
+          {% if comment.mode == 'reply' %}
+          <th class="has-text-centered has-tooltip-arrow" data-tooltip="Ответ">
+            <i class="fas fa-reply"></i>
+          </th>
+          {% elif comment.mode == 'comment' %}
+          <th class="has-text-centered has-tooltip-arrow" data-tooltip="Комментарий">
+            <i class="fas fa-comment"></i>
+          </th>
+          {% endif %}
+          <th>
+            <a href="https://www.instagram.com/{{ comment.username }}" target="blank">@{{ comment.username }}: </a> {{ comment.text }}
+          </th>
+          <th class="has-text-centered has-tooltip-arrow has-tooltip-info" data-tooltip="Перейти в instagram">
+            {% if comment.mode == 'comment' %}<a href="{{ comment.post.url }}c/{{ comment.uid }}" target="blank">{% elif comment.mode == 'reply' %}<a href="{{ comment.post.url }}c/{{ comment.uid }}/r/{{ comment.replay_uid }}/" target="blank">{% endif %}<button class="button is-rounded is-info"><i class="fas fa-external-link-alt"></i></button></a>
+          </th>
+          <th class="has-text-centered has-tooltip-arrow has-tooltip-danger" data-tooltip="Скрыть">
+            <a onclick="HideElement('tr-id-{{ comment.id }}'); HideCommentInReport('{{ comment.id }}')">
+              <button class="button is-rounded is-danger"><i class="fas fa-eye-slash"></i></button>
+            </a>
+          </th>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+  <h2 class="title"><strong>Пока ничего нет...</strong></h2>
+  {% endif %}
+</div>
+</div>
+{% endblock%}

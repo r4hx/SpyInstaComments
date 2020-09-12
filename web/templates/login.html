@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Авторизация{% endblock %}
+{% block content %}
+<section class="hero is-fullheight">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div id="login-email" class="column is-12-mobile is-6-tablet is-5-desktop is-4-widescreen">
+          <div class="container">
+            <h1 class="title">
+              Авторизация
+            </h1>
+          </div>
+          {% if form.errors %}
+          <div class="container">
+            <h1 class="subtitles has-text-danger">
+              Неверное имя пользователя или пароль
+            </h1>
+          </div>
+          {% endif %}
+          <div id="login-username-form" style="display: none" class="container">
+            <form method="POST" action="{% url 'login' %}" class="box">
+              {% csrf_token %}
+              <div class="field">
+                <label for="" class="label">Имя пользователя</label>
+                <div class="control has-icons-left">
+                  <input type="text" placeholder="Vasya" class="input is-rounded is-medium" name="username" required>
+                  <span class="icon is-medium is-left">
+                    <i class="fa fa-user"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="" class="label">Пароль</label>
+                <div class="control has-icons-left">
+                  <input type="password" placeholder="*******" class="input is-rounded is-medium" name="password" required>
+                  <span class="icon is-medium is-left">
+                    <i class="fa fa-unlock"></i>
+                  </span>
+                </div>
+                <!-- <p>Нет учетной записи? <a href="{% url 'register' %}">Зарегистрируйтесь!</a></p> -->
+              </div>
+              <input type="hidden" name="next" value="{{ next }}">
+              <div class="field">
+                <button id="button" onclick="IsLoading()" class="button is-rounded is-dark is-medium">Вход</button>
+              </div>
+            </form>
+          </div>
+          <div id="login-vk-form" class="box">
+            <div class="field">
+              <button id="button" onclick="HideElement('login-vk-form'); ShowElement('login-username-form')" class="button is-rounded is-dark is-medium">Используя логин</button>
+            </div>
+            <!-- <p>Нет учетной записи? <a href="{% url 'register' %}">Зарегистрируйтесь!</a></p> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock%}

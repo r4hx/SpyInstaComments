@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html" ; charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta charset="utf-8">
+    <link type="text/css" href="{% static '/css/bulma.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static '/css/bulma-badge.min.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static '/css/bulma-tooltip.min.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static '/css/fontawesome_all.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static '/css/custom.css' %}" rel="stylesheet">
+    <script src="{% static '/js/custom.js' %}"></script>
+    <title>{% block title %}{% endblock %}</title>
+    <script>(function (w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' }); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f); })(window, document, 'script', 'dataLayer', 'GTM-M542KH2');</script>
+</head>
+
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M542KH2" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <header>
+    </header>
+    {% if user.is_authenticated %}
+    <section class="hero is-medium">
+        <div class="hero-head">
+            <div class="tabs is-centered is-boxed is-medium">
+                <ul>
+                    {% url 'index' as index_path %}{% if request.path == index_path %}<li class="is-active">{% else %}
+                    <li>{% endif %}
+                        <a href="{% url 'index' %}" class="has-tooltip-bottom has-tooltip-arrow" data-tooltip="Добавить">
+                            <span class="icon"><i class="fas fa-home"></i></span>
+                        </a>
+                    </li>
+                    {% url 'profiles' as profiles_path %}{% if request.path == profiles_path %}<li class="is-active">{% else %}
+                    <li>{% endif %}
+                        <a href="{% url 'profiles' %}" class="has-tooltip-bottom has-tooltip-arrow has-tooltip-info" data-tooltip="Отслеживаемые">
+                            <span class="icon"><i class="fas fa-users"></i></span>
+                            {% if account_monitoring_count > 0 %}<span class="badge has-badge-rounded has-badge-info " data-badge="{{account_monitoring_count}}"></span>{% endif %}
+                        </a>
+                    </li>
+                    {% url 'keywords' as keywords_path %}{% if request.path == keywords_path %}<li class="is-active">{% else %}
+                    <li>{% endif %}
+                        <a href="{% url 'keywords' %}" class="has-tooltip-bottom has-tooltip-arrow has-tooltip-warning" data-tooltip="Ключевые слова">
+                            <span class="icon"><i class="fas fa-search"></i></span>
+                            {% if keywords_count > 0 %}<span class="badge has-badge-rounded has-badge-warning" data-badge="{{keywords_count}}"></span>{% endif %}
+                        </a>
+                    </li>
+                    {% url 'reports' as reports_path %}{% if request.path == reports_path %}<li class="is-active">{% else %}
+                    <li>{% endif %}
+                        <a href="{% url 'reports' %}" class="has-tooltip-bottom has-tooltip-arrow has-tooltip-danger" data-tooltip="Отчет">
+                            <span class="icon"><i class="far fa-clipboard"></i></span>
+                            {% if comment_not_read_count > 0 %}<span class="badge has-badge-rounded has-badge-danger" data-badge="{{comment_not_read_count}}"></span>{% endif %}
+                        </a>
+                    </li>
+                    </li>
+                    <li id="update-icon">
+                        {% if update_available %}<a onclick="ProfilesUpdate(); HideElement('update-icon')" class="has-tooltip-bottom has-tooltip-arrow has-tooltip-success has-tooltip-multiline" data-tooltip="Доступно обновление информации"><span class="icon is-medium"><i class="fas fa-sync"></i></span></a>
+                        {% else %}<a class="has-tooltip-bottom has-tooltip-arrow has-tooltip-success has-tooltip-multiline" data-tooltip="Следующее обновление будет доступно спустя 15 минут"><span class="icon is-medium"><i class="far fa-clock"></i></span></a>{% endif %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+        <footer class="footer">
+            <div class="hero-foot has-text-centered">
+                {% block footer %}Egorov Egor © 2020{% endblock %}
+            </div>
+        </footer>
+    </section>
+</body>
+</html>

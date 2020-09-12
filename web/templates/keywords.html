@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Ключевые слова{% endblock %}
+{% block content %}
+
+<div class="hero-body">
+    <div class="container">
+        <h1 class="title">Ключевые слова</h1>
+        <br>
+        <h2 class="subtitle">Добавь необходимые слова в список</h2>
+        <h2 class="subtitle">Они будут использованы для поиска в комментариях</h2>
+        <h2 class="subtitle">Например: <strong>купить, цена, стоимость, размер</strong></h2>
+        {% if messages %}
+        {% for message in messages %}
+        <h3 class="subtitle" {% if message.tags == "error" %} style="color:red" {% else %} style="color:green" {% endif %}>{{ message }}</h3>
+        {% endfor %}
+    {% endif %}
+        <div class="columns">
+            <div class="column is-narrow is-4">
+                <form method="POST" action="{% url 'keywords' %}">
+                    {% csrf_token %}
+                    <div class="control has-icons-left has-tooltip-bottom has-tooltip-arrow has-tooltip-warning" data-tooltip="Укажите все слова-триггеры">
+                        <input class="input is-rounded is-medium" type="text" name="name" placeholder="Ключевое слово" required>
+                        <span class="icon is-left">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </div>
+            </div>
+            <div class="column">
+                <button id="button" onclick="IsLoading()" class="button is-rounded is-warning is-medium" type="submit">Добавить</button>
+            </div>
+            </form>
+        </div>
+        {% if keywords %}
+        <div class="box">
+            <div class="column">
+                <div class="field is-grouped is-grouped-multiline">
+                    {% for key in keywords %}
+                    <div class="control">
+                        <div class="tags has-addons">
+                            <a class="tag is-info tag-y">{{ key }}</a>
+                            <a class="tag is-info tag-y" href="{% url 'keywords_delete' key  %}" title='Удалить из списка'><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {%endif%}
+
+    </div>
+</div>
+</div>
+
+{% endblock%}

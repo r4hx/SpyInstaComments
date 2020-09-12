@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Отслеживаемые страницы{% endblock %}
+{% block content %}
+
+<div class="hero-body is-fullheight">
+        <div class="container">
+            {% if profiles %}
+            <h2 class="title">Отслеживаемые страницы</h2>
+            <br>
+            <h2 class="subtitle">Список активных аккаунтов</h2>
+            <br>
+            <div class="columns is-multiline">
+                {% for profile in profiles %}
+                <div class="column" id="card-{{ profile.uid }}">
+                    <div class="card is-large">
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-left">
+                                    <figure class="image is-96x96">
+                                        <img src="{{ profile.pic_url }}">
+                                    </figure>
+                                </div>
+                                <div class="media-content">
+                                    <p class="title is-4">{{ profile.full_name }}</p>
+                                    <p class="subtitle is-6">@{{ profile.username }}</p>
+                                    {% if profile.external_url != None %}<p class="subtitle is-6"><a href="{{ profile.external_url }}">{{ profile.external_url }}</a></p>{% endif %}
+                                </div>
+                            </div>
+                            <div class="content">
+                                <pre>{{ profile.biography }}</pre>
+                            </div>
+                            <footer class="card-footer">
+                                <a href="https://www.instagram.com/{{ profile.username }}" target="blank" class="card-footer-item">Профиль</a>
+                                <a onclick="HideElement('card-{{ profile.uid }}'); DeleteAccount('{{ profile.uid }}')" class="card-footer-item">Удалить</a>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+</div>
+
+{% endblock%}

@@ -1,0 +1,36 @@
+.tag-x:not(body) {
+    font-size: 0.75rem;
+    height: 2em;
+    padding-left: 0.35em;
+    padding-right: 0.35em;
+  }
+
+.tag-y:not(body) {
+    padding-left: 0.35em;
+    padding-right: 0.35em;
+  }
+
+.tag-y:not(body) {
+    padding-left: 0.50em;
+    padding-right: 0.35em;
+  }
+
+.badge.is-badge-above-modal[data-badge]::after {
+  z-index: 99;
+}
+
+.table {
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin: 0;
+  border-spacing: 0;
+}
+.is-vertical-center {
+  display: flex;
+  align-items: center;
+}
+.tabs {
+  overflow: visible !important;
+}
