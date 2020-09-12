@@ -37,7 +37,7 @@
 ## Установка
 Клонируем репозиторий GitHub
 ```shell
-git clione https://github.com/r4hx/SpyInstaComments.git
+git clone https://github.com/r4hx/SpyInstaComments.git
 ```
 Переходим в каталог с программой
 ```shell
